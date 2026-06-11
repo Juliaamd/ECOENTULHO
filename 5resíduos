@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resíduos | EcoEntulho</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(2,18,43,.92), rgba(2,18,43,.96)),
+    url("img/background-ecoentulho.png");
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px;
+}
+
+.card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+h1 span{ color:#63d471; }
+
+.form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+input{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+}
+
+button{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#63d471;
+    color:#02122B;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+}
+
+.lista{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+}
+
+.item{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    padding:20px;
+    border-radius:15px;
+}
+
+.item h3{
+    color:#63d471;
+}
+
+.actions{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+}
+
+.edit{
+    background:#ffb020;
+    color:#02122B;
+    flex:1;
+}
+
+.delete{
+    background:#ff4d4d;
+    color:white;
+    flex:1;
+}
+
+.voltar{
+    display:inline-block;
+    margin-top:20px;
+    color:#63d471;
+    text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1><span>Cadastro</span> de Resíduos</h1>
+        <p>Registre e gerencie os resíduos</p>
+
+        <div class="form">
+
+            <input id="tipo" placeholder="Tipo">
+            <input id="quantidade" type="number" placeholder="Quantidade (ton)">
+            <input id="obra" placeholder="Obra">
+
+            <button id="btnSalvar" onclick="salvar()">Adicionar</button>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>Registros</h2>
+        <br>
+        <div class="lista" id="lista"></div>
+    </div>
+
+    <a class="voltar" href="dashboard.html">← Voltar ao dashboard</a>
+
+</div>
+
+<script>
+
+let residuos = JSON.parse(localStorage.getItem("residuos")) || [];
+
+let editandoId = null;
+
+renderizar();
+
+function salvar(){
+
+    const tipo = document.getElementById("tipo").value;
+    const quantidade = document.getElementById("quantidade").value;
+    const obra = document.getElementById("obra").value;
+
+    if(!tipo || !quantidade || !obra){
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    // 🔥 MODO EDITAR
+    if(editandoId !== null){
+
+        residuos = residuos.map(item => {
+            if(item.id === editandoId){
+                return {
+                    id: item.id,
+                    tipo,
+                    quantidade,
+                    obra
+                };
+            }
+            return item;
+        });
+
+        editandoId = null;
+        document.getElementById("btnSalvar").innerText = "Adicionar";
+
+    } else {
+
+        // 🔥 MODO ADICIONAR
+        const novo = {
+            id: Date.now(),
+            tipo,
+            quantidade,
+            obra
+        };
+
+        residuos.push(novo);
+    }
+
+    localStorage.setItem("residuos", JSON.stringify(residuos));
+
+    limpar();
+    renderizar();
+}
+
+function renderizar(){
+
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    residuos.forEach(item => {
+
+        lista.innerHTML += `
+            <div class="item">
+                <h3>${item.tipo}</h3>
+                <p>Quantidade: ${item.quantidade} ton</p>
+                <p>Obra: ${item.obra}</p>
+
+                <div class="actions">
+
+                    <button class="edit" onclick="editar(${item.id})">
+                        Editar
+                    </button>
+
+                    <button class="delete" onclick="deletar(${item.id})">
+                        Excluir
+                    </button>
+
+                </div>
+            </div>
+        `;
+    });
+}
+
+function deletar(id){
+
+    residuos = residuos.filter(item => item.id !== id);
+
+    localStorage.setItem("residuos", JSON.stringify(residuos));
+
+    renderizar();
+}
+
+function editar(id){
+
+    const item = residuos.find(r => r.id === id);
+
+    document.getElementById("tipo").value = item.tipo;
+    document.getElementById("quantidade").value = item.quantidade;
+    document.getElementById("obra").value = item.obra;
+
+    editandoId = id;
+
+    document.getElementById("btnSalvar").innerText = "Atualizar";
+}
+
+function limpar(){
+    document.getElementById("tipo").value = "";
+    document.getElementById("quantidade").value = "";
+    document.getElementById("obra").value = "";
+}
+
+</script>
+
+</body>
+</html>
