@@ -1,6 +1,4 @@
-# ECOENTULHO
-# 🌱 EcoEntulho
-
+# 🌱ECOENTULHO
 Sistema web de gestão inteligente de resíduos da construção civil com foco em sustentabilidade, educação ambiental e alinhamento com os Objetivos de Desenvolvimento Sustentável (ODS).
 
 ---
