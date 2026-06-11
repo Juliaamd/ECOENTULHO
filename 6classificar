@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classificação de Resíduos | EcoEntulho</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(2,18,43,.92), rgba(2,18,43,.96)),
+    url("img/background-ecoentulho.png");
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px;
+}
+
+/* HEADER */
+h1{
+    font-size:2.2rem;
+    margin-bottom:5px;
+}
+
+h1 span{
+    color:#63d471;
+}
+
+p{
+    color:#d9d9d9;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:20px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#63d471;
+    margin-bottom:10px;
+}
+
+/* TAGS */
+.tag{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:8px;
+    font-weight:700;
+    font-size:.8rem;
+}
+
+.recycle{
+    background:#63d471;
+    color:#02122B;
+}
+
+.norecycle{
+    background:#ff4d4d;
+    color:white;
+}
+
+/* STATUS */
+.status{
+    margin-top:10px;
+    font-size:.85rem;
+    opacity:.9;
+}
+
+/* LINK */
+.voltar{
+    display:inline-block;
+    margin-top:20px;
+    color:#63d471;
+    text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1><span>Classificação</span> de Resíduos | EcoEntulho</h1>
+
+    <p>
+        Dados reais do sistema baseados nos resíduos cadastrados no EcoEntulho
+    </p>
+
+    <div class="grid" id="grid"></div>
+
+    <a class="voltar" href="dashboard.html">← Voltar ao dashboard</a>
+
+</div>
+
+<script>
+
+// pega dados reais ou cria simulação
+let residuos = JSON.parse(localStorage.getItem("residuos")) || [];
+
+// fallback caso não tenha nada no sistema
+if(residuos.length === 0){
+    residuos = [
+        { tipo: "Entulho", quantidade: 20, obra: "Obra Centro" },
+        { tipo: "Madeira", quantidade: 8, obra: "Residencial Alfa" },
+        { tipo: "Metal", quantidade: 5, obra: "Obra Norte" },
+        { tipo: "Gesso", quantidade: 12, obra: "Obra Centro" }
+    ];
+}
+
+// lógica de classificação
+function processar(tipo){
+
+    tipo = tipo.toLowerCase();
+
+    if(tipo.includes("entulho")){
+        return {
+            reciclavel: true,
+            classe: "A",
+            destino: "Usina de reciclagem RCC",
+            status: "Reaproveitamento em pavimentação"
+        };
+    }
+
+    if(tipo.includes("madeira")){
+        return {
+            reciclavel: true,
+            classe: "B",
+            destino: "Cooperativa de biomassa",
+            status: "Uso energético sustentável"
+        };
+    }
+
+    if(tipo.includes("metal")){
+        return {
+            reciclavel: true,
+            classe: "B",
+            destino: "Sucata industrial licenciada",
+            status: "Alta taxa de reciclagem"
+        };
+    }
+
+    if(tipo.includes("gesso")){
+        return {
+            reciclavel: false,
+            classe: "C",
+            destino: "Aterro industrial controlado",
+            status: "Necessita tratamento especial"
+        };
+    }
+
+    return {
+        reciclavel: false,
+        classe: "D",
+        destino: "Empresa licenciada de resíduos perigosos",
+        status: "Tratamento obrigatório especializado"
+    };
+}
+
+// renderização
+function carregar(){
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    residuos.forEach(r => {
+
+        const p = processar(r.tipo);
+
+        grid.innerHTML += `
+            <div class="card">
+
+                <h3>${r.tipo}</h3>
+
+                <p><strong>Obra:</strong> ${r.obra}</p>
+                <p><strong>Quantidade:</strong> ${r.quantidade} ton</p>
+
+                <hr style="margin:10px 0; opacity:.2">
+
+                <p><strong>Classe:</strong> ${p.classe}</p>
+                <p><strong>Destino:</strong> ${p.destino}</p>
+                <p class="status">⚙️ ${p.status}</p>
+
+                <span class="tag ${p.reciclavel ? 'recycle' : 'norecycle'}">
+                    ${p.reciclavel ? "♻️ Reciclável" : "🚫 Não reciclável"}
+                </span>
+
+            </div>
+        `;
+    });
+}
+
+carregar();
+
+</script>
+
+</body>
+</html>
