@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoEntulho</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:60px 8%;
+
+    background:
+    linear-gradient(
+        90deg,
+        rgba(2,18,43,.96) 0%,
+        rgba(2,18,43,.92) 35%,
+        rgba(2,18,43,.75) 60%,
+        rgba(2,18,43,.40) 100%
+    ),
+    url("img/background-ecoentulho.png");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+.conteudo{
+    max-width:800px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:40px;
+}
+
+.logo h1{
+    font-size:4rem;
+    color:white;
+    font-weight:700;
+}
+
+.logo span{
+    color:#63d471;
+}
+
+.conteudo h2{
+    font-size:4.2rem;
+    line-height:1.1;
+    color:white;
+    margin-bottom:20px;
+}
+
+.conteudo h2 strong{
+    color:#63d471;
+}
+
+.descricao{
+    font-size:1.25rem;
+    color:#e6e6e6;
+    max-width:650px;
+    line-height:1.8;
+    margin-bottom:50px;
+}
+
+.botao-container{
+    width:100vw;
+    display:flex;
+    justify-content:center;
+    margin-top:40px;
+    margin-left:calc(-8vw);
+}
+.btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-width:360px;
+
+    padding:26px 80px;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        90deg,
+        #63d471,
+        #7ed957
+    );
+
+    color:#06152d;
+    text-decoration:none;
+
+    font-size:1.4rem;
+    font-weight:700;
+
+    box-shadow:0 15px 35px rgba(99,212,113,.4);
+
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+}
+
+footer{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#d9d9d9;
+    font-size:.95rem;
+}
+
+@media(max-width:768px){
+
+    .logo h1{
+        font-size:2.5rem;
+    }
+
+    .conteudo h2{
+        font-size:2.5rem;
+    }
+
+    .descricao{
+        font-size:1rem;
+    }
+
+    .btn{
+        min-width:280px;
+        padding:22px 40px;
+        font-size:1.2rem;
+    }
+
+    footer{
+        position:relative;
+        left:auto;
+        bottom:auto;
+        transform:none;
+        text-align:center;
+        margin-top:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="conteudo">
+
+<div class="logo">
+
+<svg width="95" height="95" viewBox="0 0 120 120">
+
+<path d="M35 18 C15 18 8 38 22 50 C34 42 42 30 35 18" fill="#63d471"/>
+
+<path d="M85 102 C105 102 112 82 98 70 C86 78 78 90 85 102" fill="#63d471"/>
+
+<path d="M25 30 C5 55 10 90 40 105"
+fill="none"
+stroke="#63d471"
+stroke-width="7"
+stroke-linecap="round"/>
+
+<path d="M95 90 C115 65 110 30 80 15"
+fill="none"
+stroke="#63d471"
+stroke-width="7"
+stroke-linecap="round"/>
+
+<rect x="45" y="28" width="24" height="48" rx="2" fill="white"/>
+
+<rect x="70" y="42" width="14" height="34" rx="2" fill="white"/>
+
+<rect x="50" y="35" width="4" height="4" fill="#0b2447"/>
+<rect x="60" y="35" width="4" height="4" fill="#0b2447"/>
+<rect x="50" y="45" width="4" height="4" fill="#0b2447"/>
+<rect x="60" y="45" width="4" height="4" fill="#0b2447"/>
+<rect x="50" y="55" width="4" height="4" fill="#0b2447"/>
+<rect x="60" y="55" width="4" height="4" fill="#0b2447"/>
+
+</svg>
+
+<h1><span>Eco</span>Entulho</h1>
+
+</div>
+
+<h2>
+Gestão Inteligente de
+<strong>Resíduos da Construção Civil</strong>
+</h2>
+
+<p class="descricao">
+Controle sustentável de resíduos para construtoras.
+</p>
+
+<div class="botao-container">
+<a href="login.html" class="btn">
+🔐 Entrar no Sistema
+</a>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+EcoEntulho • Projeto de Extensão Universitária • 2026
+</footer>
+
+</body>
+</html>
